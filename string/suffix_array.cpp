@@ -3,7 +3,7 @@
 #include <cstring>
 using namespace std;
 
-const int maxn = 1e8+5;
+const int maxn = 1e8+5; // max(字符串长度，最大字符值加1)
 
 struct SuffixArray {
     int s[maxn];  // 原始字符数组（最后一个字符应必须是0，而前面的字符必须非0）
