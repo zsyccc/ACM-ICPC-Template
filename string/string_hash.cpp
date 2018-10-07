@@ -3,7 +3,7 @@
 #include <cstring>
 using namespace std;
 
-const int maxn = 40000 + 10;
+const int maxn = 40000 + 10; // 字符串长度
 
 // 字符串哈希（概率算法）
 struct StringHash {
