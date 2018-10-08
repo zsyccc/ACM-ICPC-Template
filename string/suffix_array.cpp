@@ -140,4 +140,4 @@ namespace SuffixArray {
         }
         printf("\n");
     }
-};  // namespace SuffixArray
+}  // namespace SuffixArray
