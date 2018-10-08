@@ -8,10 +8,14 @@ using namespace std;
 2.dc3(r,sa,n+1,Max+1);r为待后缀处理的数组,sa为存储排名位置的数组,n+1和Max+1都和倍增一样
 3.calheight(r,sa,n);和倍增一样
 */
-const int maxn = 1e7 + 5;
-struct SuffixArrayDC3 {
+// DC3 算法
+namespace SuffixArray {
 #define F(x) ((x) / 3 + ((x) % 3 == 1 ? 0 : tb))
 #define G(x) ((x) < tb ? (x)*3 + 1 : ((x)-tb) * 3 + 2)
+    using std::printf;
+    
+    const int maxn = 1e7 + 5;
+
     int wa[maxn], wb[maxn], wv[maxn], ws[maxn];
     int s[maxn], sa[maxn];
     int rank[maxn], height[maxn];
@@ -37,7 +41,7 @@ struct SuffixArrayDC3 {
         for (i = n - 1; i >= 0; i--) b[--ws[wv[i]]] = a[i];
         return;
     }
-    
+
     void dc3(int *r, int *sa, int n, int m) {
         int i, j, *rn = r + n, *san = sa + n, ta = 0, tb = (n + 1) / 3, tbc = 0,
                   p;
@@ -64,8 +68,8 @@ struct SuffixArrayDC3 {
         for (; j < tbc; p++) sa[p] = wb[j++];
         return;
     }
-    
-    void build_height() {
+
+    void build_height(int n) {
         int i, j, k = 0;
         for (i = 1; i <= n; i++) rank[sa[i]] = i;
         for (i = 0; i < n; height[rank[i++]] = k)
@@ -74,16 +78,14 @@ struct SuffixArrayDC3 {
         return;
     }
 
+    void build_height() { build_height(n - 1); }
+
     void build_sa(int m) { dc3(s, sa, n, m); }
 
     // LCP 模板
     int RMQ[maxn];
     int mm[maxn];
     int best[20][maxn];
-
-    void initRMQ(){
-        initRMQ(n-1);
-    }
 
     void initRMQ(int n) {
         int i, j, a, b;
@@ -101,7 +103,9 @@ struct SuffixArrayDC3 {
             }
         return;
     }
-    
+
+    void initRMQ() { initRMQ(n - 1); }
+
     int askRMQ(int a, int b) {
         int t;
         t = mm[b - a + 1];
@@ -110,7 +114,7 @@ struct SuffixArrayDC3 {
         b = best[t][b];
         return RMQ[a] < RMQ[b] ? a : b;
     }
-    
+
     int lcp(int a, int b) {
         int t;
         a = rank[a];
@@ -126,7 +130,7 @@ struct SuffixArrayDC3 {
     //输出信息
     void debug() {
         printf("n:%d\n", n);
-        
+
         printf("%8s", "");
         for (int i = 0; i < n; i++) {
             printf("%4d", i);
@@ -157,4 +161,4 @@ struct SuffixArrayDC3 {
         }
         printf("\n");
     }
-};
+}  // namespace SuffixArray

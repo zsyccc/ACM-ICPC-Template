@@ -3,9 +3,11 @@
 #include <cstring>
 using namespace std;
 
-const int maxn = 1e7+5; // max(字符串长度，最大字符值加1)
+namespace SuffixArray {
+    using std::printf;
+    
+    const int maxn = 1e7 + 5;  // max(字符串长度，最大字符值加1)
 
-struct SuffixArray {
     int s[maxn];  // 原始字符数组（最后一个字符应必须是0，而前面的字符必须非0）
     int sa[maxn];    // 后缀数组
     int rank[maxn];  // 名次数组. rank[0]一定是n-1，即最后一个字符
@@ -63,16 +65,12 @@ struct SuffixArray {
     int mm[maxn];
     int best[20][maxn];
 
-    void initRMQ(){
-        initRMQ(n-1);
-    }
-
     void initRMQ(int n) {
         int i, j, a, b;
         for (mm[0] = -1, i = 1; i <= n; i++)
             mm[i] = ((i & (i - 1)) == 0) ? mm[i - 1] + 1 : mm[i - 1];
         for (i = 1; i <= n; i++) best[0][i] = i;
-        for (i = 1; i <= mm[n]; i++){
+        for (i = 1; i <= mm[n]; i++) {
             for (j = 1; j <= n + 1 - (1 << i); j++) {
                 a = best[i - 1][j];
                 b = best[i - 1][j + (1 << (i - 1))];
@@ -84,6 +82,8 @@ struct SuffixArray {
         }
         return;
     }
+
+    void initRMQ() { initRMQ(n - 1); }
 
     int askRMQ(int a, int b) {
         int t;
@@ -109,7 +109,7 @@ struct SuffixArray {
     //输出信息
     void debug() {
         printf("n:%d\n", n);
-        
+
         printf("%8s", "");
         for (int i = 0; i < n; i++) {
             printf("%4d", i);
@@ -140,4 +140,4 @@ struct SuffixArray {
         }
         printf("\n");
     }
-};
+};  // namespace SuffixArray
