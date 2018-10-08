@@ -4,8 +4,7 @@
 using namespace std;
 
 namespace SuffixArray {
-    using std::printf;
-    
+    using std::swap;
     const int maxn = 1e7 + 5;  // max(字符串长度，最大字符值加1)
 
     int s[maxn];  // 原始字符数组（最后一个字符应必须是0，而前面的字符必须非0）
@@ -15,6 +14,7 @@ namespace SuffixArray {
     int t[maxn], t2[maxn], c[maxn];  // 辅助数组
     int n;  // 字符个数（包括最后一个0字符）
 
+    // 可不调用
     void clear() {
         n = 0;
         memset(sa, 0, sizeof(sa));
@@ -61,52 +61,28 @@ namespace SuffixArray {
     }
 
     // LCP 模板
-    int RMQ[maxn];
-    int mm[maxn];
-    int best[20][maxn];
-
+    using std::min;
+    int dp[maxn][20];
     void initRMQ(int n) {
-        int i, j, a, b;
-        for (mm[0] = -1, i = 1; i <= n; i++)
-            mm[i] = ((i & (i - 1)) == 0) ? mm[i - 1] + 1 : mm[i - 1];
-        for (i = 1; i <= n; i++) best[0][i] = i;
-        for (i = 1; i <= mm[n]; i++) {
-            for (j = 1; j <= n + 1 - (1 << i); j++) {
-                a = best[i - 1][j];
-                b = best[i - 1][j + (1 << (i - 1))];
-                if (RMQ[a] < RMQ[b])
-                    best[i][j] = a;
-                else
-                    best[i][j] = b;
-            }
-        }
+        for (int i = 1; i <= n; i++) dp[i][0] = height[i];
+        for (int j = 1; (1 << j) <= n; j++)
+            for (int i = 1; i + (1 << j) - 1 <= n; i++)
+                dp[i][j] = min(dp[i][j - 1], dp[i + (1 << (j - 1))][j - 1]);
         return;
     }
 
     void initRMQ() { initRMQ(n - 1); }
 
-    int askRMQ(int a, int b) {
-        int t;
-        t = mm[b - a + 1];
-        b -= (1 << t) - 1;
-        a = best[t][a];
-        b = best[t][b];
-        return RMQ[a] < RMQ[b] ? a : b;
-    }
-
     int lcp(int a, int b) {
-        int t;
-        a = rank[a];
-        b = rank[b];
-        if (a > b) {
-            t = a;
-            a = b;
-            b = t;
-        }
-        return (height[askRMQ(a + 1, b)]);
+        int ra = rank[a], rb = rank[b];
+        if (ra > rb) swap(ra, rb);
+        int k = 0;
+        while ((1 << (k + 1)) <= rb - ra) k++;
+        return min(dp[ra + 1][k], dp[rb - (1 << k) + 1][k]);
     }
 
     //输出信息
+    using std::printf;
     void debug() {
         printf("n:%d\n", n);
 
