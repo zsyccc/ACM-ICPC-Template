@@ -13,7 +13,7 @@ namespace SuffixArray {
 #define F(x) ((x) / 3 + ((x) % 3 == 1 ? 0 : tb))
 #define G(x) ((x) < tb ? (x)*3 + 1 : ((x)-tb) * 3 + 2)
     using std::printf;
-    
+
     const int maxn = 1e7 + 5;
 
     int wa[maxn], wb[maxn], wv[maxn], ws[maxn];
