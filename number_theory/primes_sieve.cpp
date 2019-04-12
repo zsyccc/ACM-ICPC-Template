@@ -1,5 +1,6 @@
 bool vis[maxn];
 int primes[maxn];
+int primes_len;
 
 void sieve(int n) {
     int m = (int)sqrt(n + 0.5);
