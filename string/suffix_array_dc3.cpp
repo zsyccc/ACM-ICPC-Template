@@ -127,6 +127,14 @@ namespace SuffixArray {
         return (height[askRMQ(a + 1, b)]);
     }
 
+    int idx[maxn];
+
+    // 给字符串加上一个字符，属于字符串i
+    void add(int ch, int i) {
+        idx[n] = i;
+        s[n++] = ch;
+    }
+
     //输出信息
     void debug() {
         printf("n:%d\n", n);

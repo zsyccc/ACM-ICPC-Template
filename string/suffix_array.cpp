@@ -5,7 +5,7 @@ using namespace std;
 
 namespace SuffixArray {
     using std::printf;
-    
+
     const int maxn = 1e7 + 5;  // max(字符串长度，最大字符值加1)
 
     int s[maxn];  // 原始字符数组（最后一个字符应必须是0，而前面的字符必须非0）
@@ -104,6 +104,14 @@ namespace SuffixArray {
             b = t;
         }
         return (height[askRMQ(a + 1, b)]);
+    }
+
+    int idx[maxn];
+
+    // 给字符串加上一个字符，属于字符串i
+    void add(int ch, int i) {
+        idx[n] = i;
+        s[n++] = ch;
     }
 
     //输出信息
