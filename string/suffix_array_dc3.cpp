@@ -135,6 +135,8 @@ namespace SuffixArray {
         s[n++] = ch;
     }
 
+    void init() { n = 0; }
+
     //输出信息
     void debug() {
         printf("n:%d\n", n);
