@@ -1,7 +1,7 @@
 const int maxn = 100;
 
 // 求因子个数
-int euler_phi(int n) {
+int cnt(int n) {
     int s = 1;
     for (int i = 2; i * i <= n; i++) {
         if (n % i == 0) {
@@ -15,21 +15,6 @@ int euler_phi(int n) {
     }
     if (n > 1) s = s * 2;
     return s;
-}
-
-int phi[maxn];
-
-// 求1~n的欧拉函数值
-void phi_table(int n) {
-    for (int i = 2; i <= n; i++) phi[i] = 0;
-    phi[1] = 1;
-    for (int i = 2; i <= n; i++)
-        if (!phi[i]) {
-            for (int j = i; j <= n; j += i) {
-                if (!phi[j]) phi[j] = j;
-                phi[j] = phi[j] / i * (i - 1);
-            }
-        }
 }
 
 // 求因子的和
