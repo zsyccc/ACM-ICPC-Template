@@ -83,7 +83,7 @@ namespace SuffixArray {
     void build_sa(int m) { dc3(s, sa, n, m); }
 
     // LCP 模板
-    int RMQ[maxn];
+    const int* RMQ = height;
     int mm[maxn];
     int best[20][maxn];
 
