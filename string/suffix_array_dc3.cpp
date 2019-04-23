@@ -1,5 +1,7 @@
 #include <cstdio>
 
+#include <algorithm>
+
 using namespace std;
 
 /*
@@ -83,48 +85,25 @@ namespace SuffixArray {
     void build_sa(int m) { dc3(s, sa, n, m); }
 
     // LCP 模板
-    const int* RMQ = height;
-    int mm[maxn];
-    int best[20][maxn];
-
+    using std::min;
+    using std::swap;
+    int dp[maxn][20];
     void initRMQ(int n) {
-        int i, j, a, b;
-        for (mm[0] = -1, i = 1; i <= n; i++)
-            mm[i] = ((i & (i - 1)) == 0) ? mm[i - 1] + 1 : mm[i - 1];
-        for (i = 1; i <= n; i++) best[0][i] = i;
-        for (i = 1; i <= mm[n]; i++)
-            for (j = 1; j <= n + 1 - (1 << i); j++) {
-                a = best[i - 1][j];
-                b = best[i - 1][j + (1 << (i - 1))];
-                if (RMQ[a] < RMQ[b])
-                    best[i][j] = a;
-                else
-                    best[i][j] = b;
-            }
+        for (int i = 1; i <= n; i++) dp[i][0] = height[i];
+        for (int j = 1; (1 << j) <= n; j++)
+            for (int i = 1; i + (1 << j) - 1 <= n; i++)
+                dp[i][j] = min(dp[i][j - 1], dp[i + (1 << (j - 1))][j - 1]);
         return;
     }
 
     void initRMQ() { initRMQ(n - 1); }
 
-    int askRMQ(int a, int b) {
-        int t;
-        t = mm[b - a + 1];
-        b -= (1 << t) - 1;
-        a = best[t][a];
-        b = best[t][b];
-        return RMQ[a] < RMQ[b] ? a : b;
-    }
-
     int lcp(int a, int b) {
-        int t;
-        a = rank[a];
-        b = rank[b];
-        if (a > b) {
-            t = a;
-            a = b;
-            b = t;
-        }
-        return (height[askRMQ(a + 1, b)]);
+        int ra = rank[a], rb = rank[b];
+        if (ra > rb) swap(ra, rb);
+        int k = 0;
+        while ((1 << (k + 1)) <= rb - ra) k++;
+        return min(dp[ra + 1][k], dp[rb - (1 << k) + 1][k]);
     }
 
     int idx[maxn];
@@ -138,6 +117,7 @@ namespace SuffixArray {
     void init() { n = 0; }
 
     //输出信息
+    using std::printf;
     void debug() {
         printf("n:%d\n", n);
 
