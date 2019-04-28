@@ -6,7 +6,7 @@ const int maxn = 10000 + 5;
 
 int f[maxn];
 
-void get_next(int *P, int n) {
+void get_next(const char *P, int n) {
     f[0] = 0;
     f[1] = 0;  // 递推边界初值
     for (int i = 1; i < n; i++) {
