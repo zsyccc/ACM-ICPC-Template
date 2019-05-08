@@ -4,7 +4,7 @@
 using namespace std;
 
 // 字符串分割，分隔符为字符，可为多字符，前后不留空字符串
-// *a,b*c,d, 按,*分割 -> {"a","b","c","d"}
+// **a,b*c,d, 按,*分割 -> {"a","b","c","d"}
 // strtok 的 实现
 // s源字符串 t传出结果 sep分隔符字符串(分隔符为每个单字符)
 void split(const string &s, vector<string> &v, const string &sep) {

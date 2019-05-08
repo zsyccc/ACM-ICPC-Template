@@ -10,3 +10,4 @@
 + manacher.cpp 回文匹配算法(可用后缀数组代替,但是比后缀数组简洁得多)
 + kmp.cpp kmp算法
 + z_function.cpp z函数
++ minmax.cpp 字符串最大最小表示法

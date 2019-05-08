@@ -34,3 +34,13 @@ void Manacher(const char* s, int n) {
         }
     }
 }
+
+// 判断[l,r)是否回文
+bool is_palindrome(int l, int r) {
+    if (l == r) return true;
+    if ((r - l) & 1) {
+        return d1[l + (r - l) / 2] >= (r - l + 1) / 2;
+    } else {
+        return d2[l + (r - l) / 2] >= (r - l) / 2;
+    }
+}
