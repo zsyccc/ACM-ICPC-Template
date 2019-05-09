@@ -1,0 +1,63 @@
+\section{字符串}
+\subsection{字符串最小最大表示}
+\lstinputlisting{../string/minmax.cpp}
+
+\subsection{kmp算法}
+以i结尾的最小循环节: $i-f[i]$
+\lstinputlisting{../string/kmp.cpp}
+
+\subsection{z函数}
+\lstinputlisting{../string/z_function.cpp}
+
+\subsection{manacher}
+回文匹配算法(可用后缀数组代替,但是比后缀数组简洁得多)
+\lstinputlisting{../string/manacher.cpp}
+
+\subsection{字典树}
+\lstinputlisting{../string/trie.cpp}
+
+\subsection{ac自动机}
+\lstinputlisting{../string/ac.cpp}
+
+\subsection{后缀数组}
+\paragraph{全字符串找循环节}
+要有长度为$i$的循环节，就要满足以下条件：
+\begin{center}
+    $rank[0]−rank[i]=1$ \\
+    $height[rank[0]]=len−i$ \\
+    $len\%i==0$
+\end{center}
+\paragraph{找字串循环节 最大重复次数}
+枚举长度$len$，枚举起点$j$，求$lcp(j,j+len)$
+\begin{center}
+    $ans=lcp/len+1$ \\
+    $k=j-(len-ans\%len)$ \\
+    $if(k>0\&\&lcp(k,k+len)>=len)$\{$ans++;$\}
+\end{center}
+求ans最大值
+\paragraph{复杂度}
+\begin{itemize}
+    \item[*] 后缀数组倍增法（时间O(nlongn)，空间O(4n)）
+    \item[*] 后缀数组dc3法（时间O(n)，空间O(10n)）
+    \item[*] 后置数组快排（适用于最大值很大的情况，除了sa数组，其他暂未测试）
+\end{itemize}
+
+\subsubsection{后缀数组-倍增法}
+\lstinputlisting{../string/suffix_array.cpp}
+
+\subsubsection{后缀数组-dc3}
+\lstinputlisting{../string/suffix_array_dc3.cpp}
+
+\subsubsection{后缀数组-快排}
+\lstinputlisting{../string/suffix_array_qs.cpp}
+
+\subsection{字符串分割}
+
+\subsubsection{按字符分割}
+\lstinputlisting{../string/split_cstr.cpp}
+
+\subsubsection{按字符串分割}
+\lstinputlisting{../string/split_STL.cpp}
+
+\subsubsection{按字符分割(STL)}
+\lstinputlisting{../string/split_STL_2.cpp}

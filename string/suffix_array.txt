@@ -1,0 +1,12 @@
+全字符串找循环节：
+要有长度为i的循环节，就要满足以下条件：
+rank[0]−rank[i]=1。
+height[rank[0]]=len−i
+len%i==0
+
+找字串循环节 最大重复次数：
+枚举长度len，枚举起点j，求lcp(j,j+len)
+ans=lcp/len+1
+k=j-(len-ans%len)
+如果k>0&&lcp(k,k+len)>=len,ans++
+求ans最大值

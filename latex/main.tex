@@ -1,0 +1,58 @@
+%!TEX program = xelatex
+\documentclass[a4paper]{article}
+
+\setlength{\columnsep}{0.8cm}
+\usepackage{xeCJK}
+\setsansfont{Droid Sans Mono}
+
+\setCJKmainfont{SimHei}
+\setCJKsansfont{SimHei}
+\setCJKmonofont{SimHei}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+	language=C++,
+	breaklines=true,
+	tabsize=2,
+	basicstyle=\sf\footnotesize,
+	numberstyle=\sf\footnotesize,
+	commentstyle=\sf\footnotesize,
+	numbers=left,
+	frame=leftline,
+	escapeinside=``,
+	extendedchars=false
+}
+
+\usepackage{geometry}
+\geometry{left=2cm,right=1cm,top=1.2cm,bottom=1.5cm,headsep=0.1cm,footnotesep=0.1cm}
+
+\usepackage[
+	CJKbookmarks=true,
+	colorlinks,
+	linkcolor=black,
+	anchorcolor=black,
+	citecolor=black
+]{hyperref}
+\AtBeginDvi{\special{pdf:tounicode UTF8-UCS2}}
+
+\usepackage{fancyhdr}
+
+\usepackage{sectsty}
+
+\usepackage{graphicx}
+\sectionfont{\large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\small}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+
+\usepackage{indentfirst}
+\setlength{\parindent}{0em}
+
+\begin{document}
+\input{settings.tex}
+\input{title.tex}
+\tableofcontents\clearpage
+\input{string.tex}
+\end{document}
