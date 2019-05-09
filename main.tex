@@ -1,0 +1,78 @@
+%!TEX program = xelatex
+\documentclass[a4paper]{article}
+
+\setlength{\columnsep}{0.8cm}
+\usepackage{xeCJK}
+\setsansfont{Source Code Pro}
+
+\setCJKmainfont{SimHei}
+\setCJKsansfont{SimHei}
+\setCJKmonofont{SimHei}
+
+\usepackage{listings}
+\lstset{
+	language=C++,
+	breaklines=true,
+	tabsize=2,
+	basicstyle=\sf\footnotesize,
+	numberstyle=\sf\footnotesize,
+	commentstyle=\sf\footnotesize,
+	numbers=left,
+	frame=leftline,
+	escapeinside=``,
+	extendedchars=false
+}
+
+\usepackage{geometry}
+\geometry{left=2cm,right=1cm,top=1.2cm,bottom=1.5cm,headsep=0.1cm,footnotesep=0.1cm}
+\usepackage{courier}
+
+\usepackage[
+	CJKbookmarks=true,
+	colorlinks,
+	linkcolor=black,
+	anchorcolor=black,
+	citecolor=black
+]{hyperref}
+\AtBeginDvi{\special{pdf:tounicode UTF8-UCS2}}
+
+\usepackage{fancyhdr}
+
+\usepackage{sectsty}
+\sectionfont{\large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\small}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+
+\usepackage{indentfirst}
+\setlength{\parindent}{0em}
+
+\begin{document}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{\bfseries UESTC\_Dagon}
+\lfoot{}
+\cfoot{}
+\rfoot{\bfseries\thepage}
+\newgeometry{left=1cm,right=1cm,top=1.5cm,bottom=1.5cm}
+\begin{titlepage}
+	\pagestyle{empty}
+	
+  \begin{center}
+		~\\[80pt]
+    \hrule\ \\[8pt]
+    \fontsize{48pt}{\baselineskip}\selectfont  \textsc{ACM Template}\\[8pt]
+    ~\\[20pt]
+    % \includegraphics[scale=1]{./cover.jpg}    
+    ~\\[20pt]
+    \huge UESTC\_Dagon\\[8pt]
+    \Large Last build at \today
+  \end{center}
+\end{titlepage}
+\restoregeometry
+\tableofcontents\clearpage
+\input ./string.tex
+\end{document}
