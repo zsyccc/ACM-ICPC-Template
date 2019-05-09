@@ -36,7 +36,7 @@ input.txt
 output.txt
 
 # .vscode directory
-.vscode
+.vscode/
 
 # latex
 *.aux
