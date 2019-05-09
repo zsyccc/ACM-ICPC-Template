@@ -1,5 +1,3 @@
-#include <cstdio>
-
 #include <algorithm>
 
 using namespace std;
@@ -14,7 +12,6 @@ using namespace std;
 namespace SuffixArray {
 #define F(x) ((x) / 3 + ((x) % 3 == 1 ? 0 : tb))
 #define G(x) ((x) < tb ? (x)*3 + 1 : ((x)-tb) * 3 + 2)
-    using std::printf;
 
     const int maxn = 1e7 + 5;
 
@@ -23,9 +20,9 @@ namespace SuffixArray {
     int rank[maxn], height[maxn];
     int n;
 
-    int c0(int *r, int a, int b) {
-        return r[a] == r[b] && r[a + 1] == r[b + 1] && r[a + 2] == r[b + 2];
-    }
+    void init() { n = 0; }
+
+    int c0(int *r, int a, int b) { return r[a] == r[b] && r[a + 1] == r[b + 1] && r[a + 2] == r[b + 2]; }
 
     int c12(int k, int *r, int a, int b) {
         if (k == 2)
@@ -45,16 +42,14 @@ namespace SuffixArray {
     }
 
     void dc3(int *r, int *sa, int n, int m) {
-        int i, j, *rn = r + n, *san = sa + n, ta = 0, tb = (n + 1) / 3, tbc = 0,
-                  p;
+        int i, j, *rn = r + n, *san = sa + n, ta = 0, tb = (n + 1) / 3, tbc = 0, p;
         r[n] = r[n + 1] = 0;
         for (i = 0; i < n; i++)
             if (i % 3 != 0) wa[tbc++] = i;
         sort(r + 2, wa, wb, tbc, m);
         sort(r + 1, wb, wa, tbc, m);
         sort(r, wa, wb, tbc, m);
-        for (p = 1, rn[F(wb[0])] = 0, i = 1; i < tbc; i++)
-            rn[F(wb[i])] = c0(r, wb[i - 1], wb[i]) ? p - 1 : p++;
+        for (p = 1, rn[F(wb[0])] = 0, i = 1; i < tbc; i++) rn[F(wb[i])] = c0(r, wb[i - 1], wb[i]) ? p - 1 : p++;
         if (p < tbc)
             dc3(rn, san, tbc, p);
         else
@@ -64,8 +59,7 @@ namespace SuffixArray {
         if (n % 3 == 1) wb[ta++] = n - 1;
         sort(r, wb, wa, ta, m);
         for (i = 0; i < tbc; i++) wv[wb[i] = G(san[i])] = i;
-        for (i = 0, j = 0, p = 0; i < ta && j < tbc; p++)
-            sa[p] = c12(wb[j] % 3, r, wa[i], wb[j]) ? wa[i++] : wb[j++];
+        for (i = 0, j = 0, p = 0; i < ta && j < tbc; p++) sa[p] = c12(wb[j] % 3, r, wa[i], wb[j]) ? wa[i++] : wb[j++];
         for (; i < ta; p++) sa[p] = wa[i++];
         for (; j < tbc; p++) sa[p] = wb[j++];
         return;
@@ -84,71 +78,4 @@ namespace SuffixArray {
 
     void build_sa(int m) { dc3(s, sa, n, m); }
 
-    // LCP 模板
-    using std::min;
-    using std::swap;
-    int dp[maxn][20];
-    void initRMQ(int n) {
-        for (int i = 1; i <= n; i++) dp[i][0] = height[i];
-        for (int j = 1; (1 << j) <= n; j++)
-            for (int i = 1; i + (1 << j) - 1 <= n; i++)
-                dp[i][j] = min(dp[i][j - 1], dp[i + (1 << (j - 1))][j - 1]);
-        return;
-    }
-
-    void initRMQ() { initRMQ(n - 1); }
-
-    int lcp(int a, int b) {
-        int ra = rank[a], rb = rank[b];
-        if (ra > rb) swap(ra, rb);
-        int k = 0;
-        while ((1 << (k + 1)) <= rb - ra) k++;
-        return min(dp[ra + 1][k], dp[rb - (1 << k) + 1][k]);
-    }
-
-    int idx[maxn];
-
-    // 给字符串加上一个字符，属于字符串i
-    void add(int ch, int i) {
-        idx[n] = i;
-        s[n++] = ch;
-    }
-
-    void init() { n = 0; }
-
-    //输出信息
-    using std::printf;
-    void debug() {
-        printf("n:%d\n", n);
-
-        printf("%8s", "");
-        for (int i = 0; i < n; i++) {
-            printf("%4d", i);
-        }
-        printf("\n");
-
-        printf("%8s", "s:");
-        for (int i = 0; i < n; i++) {
-            printf("%4d", s[i]);
-        }
-        printf("\n");
-
-        printf("%8s", "sa:");
-        for (int i = 0; i < n; i++) {
-            printf("%4d", sa[i]);
-        }
-        printf("\n");
-
-        printf("%8s", "rank:");
-        for (int i = 0; i < n; i++) {
-            printf("%4d", rank[i]);
-        }
-        printf("\n");
-
-        printf("%8s", "height:");
-        for (int i = 0; i < n; i++) {
-            printf("%4d", height[i]);
-        }
-        printf("\n");
-    }
 }  // namespace SuffixArray

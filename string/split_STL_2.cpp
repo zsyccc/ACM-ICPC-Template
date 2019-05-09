@@ -42,14 +42,3 @@ void split(const string &s, vector<string> &v, const string &sep) {
         }
     }
 }
-
-int main() {
-    string s = "cabcacac";
-    vector<string> v;
-    split(s, v, "c");
-    for (auto k : v) {
-        cout << k << endl;
-    }
-    cout << v.size() << endl;
-    return 0;
-}

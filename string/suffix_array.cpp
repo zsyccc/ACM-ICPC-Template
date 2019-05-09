@@ -8,18 +8,14 @@ namespace SuffixArray {
 
     const int maxn = 1e7 + 5;  // max(字符串长度，最大字符值加1)
 
-    int s[maxn];  // 原始字符数组（最后一个字符应必须是0，而前面的字符必须非0）
-    int sa[maxn];    // 后缀数组
-    int rank[maxn];  // 名次数组. rank[0]一定是n-1，即最后一个字符
+    int s[maxn];                     // 原始字符数组（最后一个字符应必须是0，而前面的字符必须非0）
+    int sa[maxn];                    // 后缀数组
+    int rank[maxn];                  // 名次数组. rank[0]一定是n-1，即最后一个字符
     int height[maxn];                // height数组
     int t[maxn], t2[maxn], c[maxn];  // 辅助数组
-    int n;  // 字符个数（包括最后一个0字符）
+    int n;                           // 字符个数（包括最后一个0字符）
 
-    // 可不调用
-    void clear() {
-        n = 0;
-        memset(sa, 0, sizeof(sa));
-    }
+    void init() { n = 0; }
 
     // m为最大字符值加1。调用之前需设置好s和n
     void build_sa(int m) {
@@ -40,11 +36,7 @@ namespace SuffixArray {
             swap(x, y);
             p = 1;
             x[sa[0]] = 0;
-            for (i = 1; i < n; i++)
-                x[sa[i]] =
-                    y[sa[i - 1]] == y[sa[i]] && y[sa[i - 1] + k] == y[sa[i] + k]
-                        ? p - 1
-                        : p++;
+            for (i = 1; i < n; i++) x[sa[i]] = y[sa[i - 1]] == y[sa[i]] && y[sa[i - 1] + k] == y[sa[i] + k] ? p - 1 : p++;
             if (p >= n) break;
             m = p;
         }
@@ -60,15 +52,27 @@ namespace SuffixArray {
             height[rank[i]] = k;
         }
     }
+}  // namespace SuffixArray
 
-    // LCP 模板
+// 编号辅助
+namespace SuffixArray {
+    int idx[maxn];
+
+    // 给字符串加上一个字符，属于字符串i
+    void add(int ch, int i) {
+        idx[n] = i;
+        s[n++] = ch;
+    }
+}  // namespace SuffixArray
+
+// LCP 模板
+namespace SuffixArray {
     using std::min;
     int dp[maxn][20];
     void initRMQ(int n) {
         for (int i = 1; i <= n; i++) dp[i][0] = height[i];
         for (int j = 1; (1 << j) <= n; j++)
-            for (int i = 1; i + (1 << j) - 1 <= n; i++)
-                dp[i][j] = min(dp[i][j - 1], dp[i + (1 << (j - 1))][j - 1]);
+            for (int i = 1; i + (1 << j) - 1 <= n; i++) dp[i][j] = min(dp[i][j - 1], dp[i + (1 << (j - 1))][j - 1]);
         return;
     }
 
@@ -81,18 +85,10 @@ namespace SuffixArray {
         while ((1 << (k + 1)) <= rb - ra) k++;
         return min(dp[ra + 1][k], dp[rb - (1 << k) + 1][k]);
     }
+}  // namespace SuffixArray
 
-    int idx[maxn];
-
-    // 给字符串加上一个字符，属于字符串i
-    void add(int ch, int i) {
-        idx[n] = i;
-        s[n++] = ch;
-    }
-
-    void init() { n = 0; }
-
-    //输出信息
+// 调试信息
+namespace SuffixArray {
     using std::printf;
     void debug() {
         printf("n:%d\n", n);

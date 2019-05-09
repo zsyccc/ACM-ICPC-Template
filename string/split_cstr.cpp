@@ -14,14 +14,3 @@ void split(char *s, vector<string> &v,const char *sep) {
         p = strtok(NULL, sep);
     }
 }
-
-int main() {
-    char s[] = "cabcacac";
-    vector<string> v;
-    split(s, v, "c");
-    for (auto k : v) {
-        cout << k << endl;
-    }
-    cout << v.size() << endl;
-    return 0;
-}

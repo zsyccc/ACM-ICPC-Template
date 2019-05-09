@@ -37,3 +37,9 @@ output.txt
 
 # .vscode directory
 .vscode
+
+# latex
+*.aux
+*.log
+*.synctex.gz
+*.toc
