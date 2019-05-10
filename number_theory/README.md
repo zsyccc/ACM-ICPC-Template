@@ -19,6 +19,9 @@
   + 迭代（更快）
 + big_mod.cpp
   + 大整数取模
-
-+ to-do
-  + china
++ log_mod.cpp
+  + 离散对数
+  + Shank的大步小步算法
++ china.cpp
+  + 中国剩余定理（余数互质）
+  + 扩展中国剩余定理（余数可以不互质）
