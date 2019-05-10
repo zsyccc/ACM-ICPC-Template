@@ -1,0 +1,66 @@
+\section{动态规划}
+\subsection{物品无限的背包问题}
+\paragraph{模型}
+\begin{itemize}
+	\item[$\cdot$] 有$n$种物品，每种物品有无限多个。第$i$种物品的体积为$V_i$，重量为$W_i$。选一些物品装到一个容量为$C$的背包，使得背包内物品在总体积不超过$C$的前提下重量尽量大
+	\item[$\cdot$] $d[i]$：体积为$i$时选择物品的最大价值
+	\item[$\cdot$] 转移方程：$d[i]=\max \{d[i-V[j]]+W[j]\}$
+	\item[$\cdot$] 结果：$d[C]$ ???  
+\end{itemize}
+\subsection{0-1背包}
+\begin{itemize}
+	\item[1] 模型
+		\begin{itemize}
+			\item[$\cdot$] 有$n$种物品，每种只有一个。第$i$种物品的体积为$V_i$，重量为$W_i$。选一些物品装到一个容量为$C$的背包，使得背包内物品在总体积不超过$C$的前提下重量尽量大
+			\item[$\cdot$] $d[i][j]$：把第$i,i+1,i+2\cdots,n$个物品装入容量为$j$的背包中的最大重量之和
+			\item[$\cdot$] 转移方程：$d[i][j]=\max{\{d[i+1][j],d[i+1]+W[i]\}}$
+			\item[$\cdot$] 结果：$d[0][C]$   
+		\end{itemize}
+	\item[2] LG-P1060
+		\begin{itemize}
+			\item[$\cdot$] 有$n$件物品，第$i$件物品价格为$V_i$，权重为$W_i$。选一些物品，求物品总价格不超过N的条件下最大价格与权重乘积之和
+			\item[$\cdot$] $d[i][j]$：把第$i,i+1,i+2\cdots,n$个物品装入容量为$j$的背包中的最大价值与权重乘积之和
+			\item[$\cdot$] 转移方程：$d[i][j]=\max{\{d[i+1][j],d[i+1][j-V[i]]+V[i]\times W[i]\}}$
+			\item[$\cdot$] 结果：$d[0][N]$
+		\end{itemize}
+	\item[3] LG-P1164
+		\begin{itemize}
+			\item[$\cdot$] 有$n$种物品，每种只有一个。第$i$种价格为$V_i$元，求花光$C$元的方案都多少种
+			\item[$\cdot$] $d[i][j]$：第$i,i+1,i+2,\cdots,n$个物品花光$j$元的方案数
+			\item[$\cdot$] 转移方程：$d[i][j]=d[i+1][j]+d[i+1][j-V[i]]$
+			\item[$\cdot$] 结果：$d[0][C]$
+		\end{itemize}
+	\item[4] LG-P1064
+		\begin{itemize}
+			\item[$\cdot$] 有$n$种物品，每种只有一个，分为主件与附件两类。主件可以有$0-2$个附件，附件不再拥有附件。若选择附件，则其主件必选。第$i$种物品的价格为$V_i$，权重为$W_i$。选一些物品，求物品总价格不超过N的条件下最大价格与权重乘积之和
+        	\item[$\cdot$] 方法：只遍历主件。对每个主件来说，最多有$5$种决策（不再是标准0-1背包问题的$2$种），即不选该物品，只选该物品，选择该物品和附件1，选择该物品和附件2，选择该物品和附件1,2。其他均与0-1背包相同
+		\end{itemize}
+\end{itemize}
+\subsection{线性结构上的动态规划}
+\subsubsection{LIS（最长上升子序列）}
+\begin{itemize}
+	\item[1] 模型
+		\item[$\cdot$] $d[i]$：以$i$为终点的最长上升子序列的长度
+		\item[$\cdot$] 转移方程：$d[i]=\max\{0,d[j]|j<i,A_j<A_i\}+1$
+		\item[$\cdot$] 结果：$\max \{ d[i]\}$
+	\item[2] 最少不上升子序列的个数$=$最长上升子序列的长度
+	\item[3] $O(nlogn)$求LIS
+		\item[$\cdot$] $e.g.$ luogu-P1020
+		\item[$\cdot$] $d[]$：当前最长上升子序列
+		\item[$\cdot$] 若$A_i>d[len]$，$d[len]=A_i$
+		\item[$\cdot$] 否则，在$d[]$中找到第一个大于等于$A_i$的数，用$A_i$替换
+		\item[$\cdot$] 结果：$len$
+	\item[4] LG-P1091:变形
+		\item[$\cdot$] $inc[i]$：以$i$为终点的最长上升子序列的长度
+		\item[$\cdot$] $dwn[i]$：以$i$为起点的最长下降子序列的长度
+		\item[$\cdot$] 答案：$\max\{inc[i]+dwn[i]-1\}$
+\end{itemize}
+\subsubsection{LCS（最长公共子序列）}
+\begin{equation*}
+	d[i][j]=
+	\left\{
+	\begin{array}{rcl}
+	d[i-1][j-1]+1,A_i=A_j\\
+	\max \{d[i-1][j],d[i][j-1]\},A_i\neq A_j
+	\end{array} \right.
+\end{equation*}

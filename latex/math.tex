@@ -1,5 +1,161 @@
 \section{数学}
 \subsection{矩阵}
+\paragraph{线性递推}
+\begin{equation*}
+    f(n)=a_1f(n-1)+a_2f(n-2)+a_3f(n-3)+\cdots +a_df(n-d)
+\end{equation*}
+\begin{equation*}
+    \left[
+        \begin{matrix}
+            f(n-d)\\
+            \vdots\\
+            f(n-2)\\
+            f(n-1)\\
+            f(n)
+        \end{matrix}
+    \right]
+    =
+    \left[
+        \begin{matrix}
+            &1\\
+            &&1\\
+            &&&\ddots\\
+            \vdots&&&&1\\
+            a_d&a_{d-1}&a_{d-2}&\cdots&a_1
+        \end{matrix}
+    \right]
+    \times
+    \left[
+        \begin{matrix}
+            f(n-d-1)\\
+            \vdots\\
+            f(n-3)\\
+            f(n-2)\\
+            f(n-1)
+        \end{matrix}
+    \right]
+\end{equation*}
+\paragraph{二项式定理}
+\begin{itemize}
+    \item[1] 计算$k$次方和 
+        \begin{equation*}
+            S_n=\sum_{i=1}^{n}{i^k}
+        \end{equation*}
+        \begin{align*}
+            S_{n+1}&=S_n+(n+1)^k\\
+            &=S_n+C_{k}^{0}n^k+C_{k}^{1}n^{k-1}+\cdots+C_{k}^{k}n^0
+        \end{align*}
+        \begin{equation*}
+            \left[
+            \begin{matrix}
+                S_{n+1}\\
+                (n+1)^k\\
+                (n+1)^{k-1}\\
+                \vdots\\
+                (n+1)^0
+            \end{matrix}
+            \right]
+            =
+            \left[
+            \begin{matrix}
+                1&C_{k}^{0}&C_{k}^1&\cdots&C_{k}^{k}\\
+                0&C_{k}^{0}&C_{k}^1&\cdots&C_{k}^{k}\\
+                0&0&C_{k-1}^0&\cdots&C_{k-1}^{k-1}\\
+                \vdots&\vdots&\vdots&\ddots&\vdots\\
+                0&0&0&\cdots&C_0^0    
+            \end{matrix}
+            \right]
+            \times
+            \left[
+            \begin{matrix}
+                S_{n}\\
+                n^k\\
+                n^{k-1}\\
+                \vdots\\
+                n^0
+            \end{matrix}
+            \right]
+        \end{equation*}
+    \item[2] 更一般的例子
+        \begin{equation*}
+            S_{n}=\sum_{i=1}^{n}(a i+b)^{k}
+        \end{equation*}
+        \begin{align*}
+            S_{n}&=[a(n-1)+(a+b)]^{k}+S_{n-1}\\ 
+            &=C_{k}^{0} a^{k}(n-1)^{k}+C_{k}^{1} a^{k-1}(a+b)(n-1)^{k-1}+\cdots+C_{k}^{k}(a+b)^{k}+S_{n-1}
+        \end{align*}
+        \begin{equation*}
+        \left[
+        \begin{matrix}
+            {c}{n^{k}} \\ 
+            {n^{k-1}} \\ 
+            {\vdots} \\ 
+            {n^{0}} \\
+            {S_{n}}
+        \end{matrix}
+        \right]
+        =
+        \left[
+        \begin{matrix}
+        {C_{k}^{0}} &{C_{k}^{1}} & {\cdots} & {C_{k}^{k}} & {0} \\
+        {0} & {C_{k-1}^{0}} & {\cdots} & {C_{k-1}^{k-1}} & {0} \\
+        {\vdots} & {\vdots} & {\ddots} & {\vdots} & {\vdots} \\ 
+        {0} & {\cdots} & {\cdots} & {C_{0}^{0}} & {0} \\ 
+        {C_{k}^{0} a^{k}} & {C_{k}^{1} a^{k-1}(a+b)} & {\cdots} & {C_{k}^{k}(a+b)^{k}} & {1}
+        \end{matrix}
+        \right]
+        \times
+        \left[
+        \begin{matrix}
+        {n^{k}} \\
+        {n^{k-1}} \\
+        {\vdots} \\ 
+        {n^{0}} \\ 
+        {S_{n}}
+        \end{matrix}
+        \right]
+        \end{equation*}
+    \item[3] 更复杂的例子
+        \begin{equation*}
+            S_{n}=\sum_{i=1}^{n} i^{k} k^{i}
+        \end{equation*}
+        \begin{align*}
+            S_n&=n^kk^n+S_{n-1}\\
+            &=(n-1+1)^kk^{(n-1)+1}+S_{n-1}\\
+            &=C_k^0(n-1)^kk{(n-1)+1}+C_k^1(n-1)^{k-1}k^{(n-1)+1}+\cdots+C_k^k(n-1)^0k^{(n-1)+1}+S_{n-1}
+        \end{align*}
+        \begin{equation*}
+        \left[
+        \begin{matrix}
+        {n^{k} k^{n+1}} \\ 
+        {n^{k-1} k^{n+1}} \\ 
+        \vdots\\
+        {n^{0} k^{n+1}} \\ 
+        {S_{n}}
+        \end{matrix}
+        \right]
+        =
+        \left[
+        \begin{matrix}
+        {k C_{k}^{0}} & {k C_{k}^{1}} & {\cdots} & {k C_{k}^{k}} & {0} \\ 
+        {0} & {k C_{k-1}^{0}} & {\cdots} & {k C_{k-1}^{k-1}} & {0} \\ 
+        {\vdots} & {\vdots} & {\ddots} & {\vdots} & {\vdots} \\ 
+        {0} & {\cdots} & {\cdots} & {k C_{0}^{0}} & {0} \\ 
+        {C_{k}^{0}} & {C_{k}^{1}} & {\cdots} & {C_{k}^{k}} & {1}
+        \end{matrix}
+        \right]
+        \times
+        \left[
+        \begin{matrix}
+        {(n-1)^{k} k^{(n-1)+1}} \\ 
+        {(n-1)^{k-1} k^{(n-1)+1}} \\ 
+        {\vdots} \\ 
+        {(n-1)^{0} k^{(n-1)+1}} \\ 
+        {S_{n-1}}
+        \end{matrix}
+        \right]
+        \end{equation*}
+\end{itemize}
 \lstinputlisting{../math/matrix.cpp}
 
 \subsection{杜教筛}
